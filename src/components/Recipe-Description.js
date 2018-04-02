@@ -62,7 +62,7 @@ export default class RecipeDescription extends React.Component {
             );
         });
         return (
-            <div className="recipe-box">
+            <div className="recipe-description-box">
                 <h1>{this.state.title}</h1>
                 <Card className="recipe-card">
                     <CardImg
@@ -85,6 +85,9 @@ export default class RecipeDescription extends React.Component {
                         </CardText>
                         <CardLink href={this.state.source_url}>
                             View on {this.state.publisher}
+                        </CardLink>
+                        <CardLink href="https://www.convert-me.com/en/convert/cooking/">
+                            Click here for units conversion?
                         </CardLink>
                     </CardBody>
                 </Card>

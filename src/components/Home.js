@@ -30,11 +30,11 @@ export default class Home extends React.Component {
             );
         });
         return (
-            <div>
+            <div className="recipes-wraper">
                 <Container>
                     <Row>
                         <Col sm="12">
-                            <div className="recipes-wraper">{recipes}</div>
+                            <div className="recipes-box">{recipes}</div>
                         </Col>
                     </Row>
                 </Container>

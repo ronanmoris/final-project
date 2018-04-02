@@ -39,7 +39,14 @@ export default class Navigation extends React.Component {
         return (
             <div>
                 <Navbar color="faded" light expand="md">
-                    <NavbarBrand href="/">What`s for dinner?</NavbarBrand>
+                    <NavItem>
+                        <NavLink href="/">
+                            <img id="logo" src="./images/logo.png" alt="Logo" />
+                        </NavLink>
+                    </NavItem>
+                    <NavbarBrand id="navbar-brand" href="/">
+                        What`s for dinner?
+                    </NavbarBrand>
                     <div className="search-box">
                         <input
                             id="search-bar"
@@ -53,7 +60,7 @@ export default class Navigation extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
+                                <DropdownToggle id="navbar-toggle" nav caret>
                                     Account
                                 </DropdownToggle>
                                 <DropdownMenu right>
@@ -71,5 +78,6 @@ export default class Navigation extends React.Component {
     }
 }
 
+//    <i class="fas fa-search" />
 //link for footer
 //<a href="http://www.freepik.com">Designed by Valeria_Aksakova / Freepik</a>

@@ -10,7 +10,6 @@ import fetchIngredients from "../service/api/Food-service";
 
 export default class Main extends React.Component {
     constructor(props) {
-        console.log("props inside Main ", props);
         super(props);
 
         this.state = {
@@ -38,10 +37,8 @@ export default class Main extends React.Component {
     }
 
     handleKeyUp(e) {
-        console.log("e", e);
         const self = this;
         if (!e.target.value) {
-            ("voltei pq nao tinha valor");
             return;
         }
         if (self.state.typingTimeout) {
@@ -67,10 +64,8 @@ export default class Main extends React.Component {
     render() {
         let whatToRender;
         if (this.state.recipeId) {
-            console.log("if ");
             whatToRender = <RecipeDescription recipeId={this.state.recipeId} />;
         } else {
-            console.log("else");
             whatToRender = (
                 <Home
                     recipes={this.state.recipes}
@@ -90,11 +85,18 @@ export default class Main extends React.Component {
                                     onKeyUp={this.handleKeyUp}
                                     searchText={this.state.searchText}
                                 />
-
-                                {whatToRender}
                             </div>
                         )}
                     />
+                    <div className="welcome-wraper">
+                        <h1>What is in your fridge?</h1>
+                        <h2>
+                            We will help you find recipes to match the
+                            ingredients you already have at home
+                        </h2>
+                    </div>
+                    {whatToRender}
+
                     <Route exact path="/recipe" component={RecipeDescription} />
                 </div>
             </BrowserRouter>
