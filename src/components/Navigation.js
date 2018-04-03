@@ -18,12 +18,13 @@ export default class Navigation extends React.Component {
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false,
             typingTimeOut: 0
         };
+        this.toggle = this.toggle.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
     toggle() {
         this.setState({
@@ -34,28 +35,37 @@ export default class Navigation extends React.Component {
     handleKeyUp(e) {
         this.props.onKeyUp(e);
     }
+    //NOT WORKING!!!
+    handleClick() {
+        console.log("cliquei");
+    }
 
     render() {
         return (
             <div>
                 <Navbar color="faded" light expand="md">
-                    <NavItem>
-                        <NavLink href="/">
-                            <img id="logo" src="./images/logo.png" alt="Logo" />
-                        </NavLink>
-                    </NavItem>
                     <NavbarBrand id="navbar-brand" href="/">
                         What`s for dinner?
                     </NavbarBrand>
                     <div className="search-box">
                         <input
                             id="search-bar"
-                            value={this.props.searchText}
                             onChange={this.handleKeyUp}
+                            value={this.props.searchText}
                             type="text"
                             placeholder="type ingredients or recipe..."
                         />
+                        <span
+                            onClick={this.handleClick}
+                            className="fas fa-search"
+                        />
                     </div>
+                    <NavItem>
+                        <NavLink href="/registration">Register</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="/login">Login</NavLink>
+                    </NavItem>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
@@ -77,7 +87,14 @@ export default class Navigation extends React.Component {
         );
     }
 }
+//
 
-//    <i class="fas fa-search" />
+//WITH OR WITHOUT THIS LOGO?
+//<NavItem>
+//     <NavLink href="/">
+//         <img id="logo" src="./images/logo.png" alt="Logo" />
+//     </NavLink>
+// </NavItem>
+
 //link for footer
 //<a href="http://www.freepik.com">Designed by Valeria_Aksakova / Freepik</a>

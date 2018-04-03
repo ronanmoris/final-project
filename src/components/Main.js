@@ -5,6 +5,8 @@ import Home from "./Home";
 import Recipe from "./Recipe";
 import RecipeDescription from "./Recipe-Description";
 import Navigation from "./Navigation";
+import Register from "./Register";
+import Login from "./Login";
 import { Row } from "reactstrap";
 import fetchIngredients from "../service/api/Food-service";
 
@@ -49,7 +51,7 @@ export default class Main extends React.Component {
             searchText: e.target.value,
             typingTimeout: setTimeout(
                 this.getIngredients(e.target.value),
-                2000
+                3000
             ),
             recipeId: null
         });
@@ -59,6 +61,10 @@ export default class Main extends React.Component {
             recipeId: id,
             searchText: ""
         });
+    }
+
+    handleClick() {
+        console.log("clicked in main");
     }
 
     render() {
@@ -84,6 +90,7 @@ export default class Main extends React.Component {
                                 <Navigation
                                     onKeyUp={this.handleKeyUp}
                                     searchText={this.state.searchText}
+                                    handleClick={this.handleClick}
                                 />
                             </div>
                         )}
@@ -92,12 +99,13 @@ export default class Main extends React.Component {
                         <h1>What is in your fridge?</h1>
                         <h2>
                             We will help you find recipes to match the
-                            ingredients you already have at home
+                            ingredients you already have at home.
                         </h2>
                     </div>
                     {whatToRender}
 
-                    <Route exact path="/recipe" component={RecipeDescription} />
+                    <Route exact path="/registration" component={Register} />
+                    <Route exact path="/login" component={Login} />
                 </div>
             </BrowserRouter>
         );
