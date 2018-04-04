@@ -1,5 +1,11 @@
 import React from "react";
-import { HashRouter, Route, Link, BrowserRouter } from "react-router-dom";
+import {
+    HashRouter,
+    Route,
+    Link,
+    BrowserRouter,
+    withRouter
+} from "react-router-dom";
 import ReactDOM from "react-dom";
 import Home from "./Home";
 import Recipe from "./Recipe";
@@ -7,9 +13,9 @@ import RecipeDescription from "./Recipe-Description";
 import Navigation from "./Navigation";
 import Register from "./Register";
 import Login from "./Login";
+import RecipeUploader from "./Recipe-Uploader";
 import { Row } from "reactstrap";
 import fetchIngredients from "../service/api/Food-service";
-import { withRouter } from "react-router-dom";
 
 export default class Main extends React.Component {
     constructor(props) {
@@ -67,7 +73,7 @@ export default class Main extends React.Component {
     }
     handleLogout() {
         this.setState({ isLoggedIn: false });
-        localStorage.removeItem("userLogged");
+        localStorage.clear();
     }
     render() {
         let whatToRender;
@@ -91,10 +97,7 @@ export default class Main extends React.Component {
                             searchText={this.state.searchText}
                             handleClick={this.handleClick}
                             loggedIn={this.state.isLoggedIn}
-                            onLoggedOut={() => {
-                                this.handleLogout();
-                                location.replace("/");
-                            }}
+                            onLoggedOut={this.handleLogout}
                         />
                     </div>
 
@@ -108,6 +111,11 @@ export default class Main extends React.Component {
                     {whatToRender}
 
                     <Route exact path="/registration" component={Register} />
+                    <Route
+                        exact
+                        path="/recipeUploader"
+                        component={RecipeUploader}
+                    />
                     <Route
                         exact
                         path="/login"

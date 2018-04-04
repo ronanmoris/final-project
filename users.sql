@@ -7,3 +7,14 @@ CREATE TABLE users(
    password VARCHAR(255) NOT NULL
 
 );
+
+DROP TABLE IF EXISTS recipes;
+
+CREATE TABLE recipes(
+   id SERIAL PRIMARY KEY,
+   userId INTEGER,
+   textarea TEXT NOT NULL,
+   title VARCHAR(255),
+   image VARCHAR(255)
+
+);

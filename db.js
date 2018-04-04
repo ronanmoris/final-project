@@ -1,5 +1,5 @@
 const spicedPg = require("spiced-pg");
-// const config = require("./config.json");
+const config = require("./config.json");
 
 if (!process.env.DATABASE_URL) {
     var { dbUser, dbPass } = require("./secrets.json");
@@ -28,7 +28,22 @@ function checkUserCredentialsToLogIn(email) {
         });
 }
 
+function uploadRecipe(userId, image, text) {
+    return db
+        .query(
+            `INSERT into recipes (userId,image,textarea) VALUES ($1,$2,$3) RETURNING *`,
+            [userId, image, text]
+        )
+        .then(results => {
+            if (results.rows[0]) {
+                results.rows[0].image = config.s3Url + results.rows[0].image;
+            }
+            return results.rows;
+        });
+}
+
 module.exports = {
     storeUserInfo,
-    checkUserCredentialsToLogIn
+    checkUserCredentialsToLogIn,
+    uploadRecipe
 };

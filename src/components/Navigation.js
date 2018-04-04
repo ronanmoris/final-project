@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import RecipeUploader from "./Recipe-Uploader";
 import {
     Collapse,
     Navbar,
@@ -26,6 +27,7 @@ export default class Navigation extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.isLoggedIn = this.isLoggedIn.bind(this);
+        this.onLogout = this.onLogout.bind(this);
     }
     toggle() {
         this.setState({
@@ -48,17 +50,17 @@ export default class Navigation extends React.Component {
     }
     onLogout() {
         axios.post("/logout").then(response => {
-            console.log("response", response);
             if (response.status === 200) {
                 this.props.onLoggedOut();
+                this.setState({ hello: "world" });
             }
         });
     }
     render() {
-        console.log(this.isLoggedIn());
         let loginLink = "";
         let registerLink = "";
         let logoutLink = "";
+        let addRecipeLink = "";
 
         if (!this.isLoggedIn()) {
             loginLink = (
@@ -77,6 +79,11 @@ export default class Navigation extends React.Component {
                 <Link className="nav-link" to="/" onClick={this.onLogout}>
                     Logout
                 </Link>
+            );
+            addRecipeLink = (
+                <NavItem>
+                    <NavLink href="/recipeUploader">Add Recipe</NavLink>
+                </NavItem>
             );
         }
         return (
@@ -98,9 +105,7 @@ export default class Navigation extends React.Component {
                             className="fas fa-search"
                         />
                     </div>
-                    <NavItem>
-                        <NavLink href="#">Add Recipe</NavLink>
-                    </NavItem>
+                    {addRecipeLink}
                     {registerLink}
                     {loginLink}
                     {logoutLink}

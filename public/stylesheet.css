@@ -184,9 +184,11 @@ HOME
 /*===================
 REGISTRATION FORM
 ===================*/
-.registration-form {
+.registration-form,
+.login-form {
     padding: 1.5%;
-    margin-top: 2%;
+    margin-top: 1%;
+    margin-bottom: 5%;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
@@ -199,15 +201,7 @@ REGISTRATION FORM
 /*=====================
 LOGIN
 =====================*/
-.login-form {
-    padding: 1.5%;
-    margin-top: 2%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    width: 90%;
-    border-top: 2px solid black;
-}
+
 .error {
     color: red;
 }

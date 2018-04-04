@@ -1,5 +1,5 @@
 import React from "react";
-import RecipeUploader from "./Recipe-uploader";
+import RecipeUploader from "./Recipe-Uploader";
 import {
     Card,
     CardImg,
@@ -85,10 +85,13 @@ export default class RecipeDescription extends React.Component {
                         <CardText>
                             <strong>Directions: </strong>
                         </CardText>
-                        <CardLink href={this.state.source_url}>
+                        <CardLink target="_blank" href={this.state.source_url}>
                             View on {this.state.publisher}
                         </CardLink>
-                        <CardLink href="https://www.convert-me.com/en/convert/cooking/">
+                        <CardLink
+                            target="_blank"
+                            href="https://www.convert-me.com/en/convert/cooking/"
+                        >
                             Click here for units conversion?
                         </CardLink>
                     </CardBody>
