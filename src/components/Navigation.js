@@ -1,5 +1,6 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+import axios from "axios";
 import {
     Collapse,
     Navbar,
@@ -24,7 +25,7 @@ export default class Navigation extends React.Component {
         };
         this.toggle = this.toggle.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.isLoggedIn = this.isLoggedIn.bind(this);
     }
     toggle() {
         this.setState({
@@ -35,17 +36,54 @@ export default class Navigation extends React.Component {
     handleKeyUp(e) {
         this.props.onKeyUp(e);
     }
-    //NOT WORKING!!!
-    handleClick() {
-        console.log("cliquei");
-    }
 
+    isLoggedIn() {
+        if (
+            localStorage.getItem("userLogged") &&
+            Boolean(localStorage.getItem("userLogged")) === true
+        ) {
+            return true;
+        }
+        return false;
+    }
+    onLogout() {
+        axios.post("/logout").then(response => {
+            console.log("response", response);
+            if (response.status === 200) {
+                this.props.onLoggedOut();
+            }
+        });
+    }
     render() {
+        console.log(this.isLoggedIn());
+        let loginLink = "";
+        let registerLink = "";
+        let logoutLink = "";
+
+        if (!this.isLoggedIn()) {
+            loginLink = (
+                <NavItem>
+                    <NavLink href="/login">Login</NavLink>
+                </NavItem>
+            );
+            registerLink = (
+                <NavItem>
+                    <NavLink href="/registration">Register</NavLink>
+                </NavItem>
+            );
+        }
+        if (this.isLoggedIn()) {
+            logoutLink = (
+                <Link className="nav-link" to="/" onClick={this.onLogout}>
+                    Logout
+                </Link>
+            );
+        }
         return (
             <div>
                 <Navbar color="faded" light expand="md">
                     <NavbarBrand id="navbar-brand" href="/">
-                        What`s for dinner?
+                        WHAT `S FOR DINNER?
                     </NavbarBrand>
                     <div className="search-box">
                         <input
@@ -61,27 +99,12 @@ export default class Navigation extends React.Component {
                         />
                     </div>
                     <NavItem>
-                        <NavLink href="/registration">Register</NavLink>
+                        <NavLink href="#">Add Recipe</NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink href="/login">Login</NavLink>
-                    </NavItem>
+                    {registerLink}
+                    {loginLink}
+                    {logoutLink}
                     <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle id="navbar-toggle" nav caret>
-                                    Account
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem>LogIn</DropdownItem>
-
-                                    <DropdownItem divider />
-                                    <DropdownItem>Reset</DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </Nav>
-                    </Collapse>
                 </Navbar>
             </div>
         );

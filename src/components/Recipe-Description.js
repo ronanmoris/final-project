@@ -1,4 +1,5 @@
 import React from "react";
+import RecipeUploader from "./Recipe-uploader";
 import {
     Card,
     CardImg,
@@ -62,7 +63,8 @@ export default class RecipeDescription extends React.Component {
             );
         });
         return (
-            <div className="recipe-description-box">
+            <div className="recipe-description-wraper">
+                <div className="recipe-description-box" />
                 <h1>{this.state.title}</h1>
                 <Card className="recipe-card">
                     <CardImg
@@ -91,6 +93,9 @@ export default class RecipeDescription extends React.Component {
                         </CardLink>
                     </CardBody>
                 </Card>
+                <div />
+
+                <RecipeUploader />
             </div>
         );
     }

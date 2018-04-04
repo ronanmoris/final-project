@@ -9,6 +9,7 @@ import Register from "./Register";
 import Login from "./Login";
 import { Row } from "reactstrap";
 import fetchIngredients from "../service/api/Food-service";
+import { withRouter } from "react-router-dom";
 
 export default class Main extends React.Component {
     constructor(props) {
@@ -18,15 +19,14 @@ export default class Main extends React.Component {
             recipes: [],
             count: 0,
             searchText: "",
-            typingTimeout: "",
+            typingTimeout: undefined,
             recipeId: 0
         };
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.getIngredients = this.getIngredients.bind(this);
         this.onNewRecipeId = this.onNewRecipeId.bind(this);
-    }
-    componentWillReceiveProps(newProps) {
-        console.log("next ", newProps);
+        this.handleLoginEvent = this.handleLoginEvent.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
     getIngredients(value) {
@@ -40,9 +40,7 @@ export default class Main extends React.Component {
 
     handleKeyUp(e) {
         const self = this;
-        if (!e.target.value) {
-            return;
-        }
+
         if (self.state.typingTimeout) {
             clearTimeout(self.state.typingTimeout);
         }
@@ -50,8 +48,8 @@ export default class Main extends React.Component {
         self.setState({
             searchText: e.target.value,
             typingTimeout: setTimeout(
-                this.getIngredients(e.target.value),
-                3000
+                this.getIngredients.bind(this, e.target.value),
+                2000
             ),
             recipeId: null
         });
@@ -62,11 +60,15 @@ export default class Main extends React.Component {
             searchText: ""
         });
     }
-
-    handleClick() {
-        console.log("clicked in main");
+    handleLoginEvent(history) {
+        this.setState({ isLoggedIn: true });
+        localStorage.setItem("userLogged", true);
+        history.push("/");
     }
-
+    handleLogout() {
+        this.setState({ isLoggedIn: false });
+        localStorage.removeItem("userLogged");
+    }
     render() {
         let whatToRender;
         if (this.state.recipeId) {
@@ -79,22 +81,23 @@ export default class Main extends React.Component {
                 />
             );
         }
+
         return (
             <BrowserRouter>
                 <div className="main-wallpaper">
-                    <Route
-                        exact
-                        path="/"
-                        render={() => (
-                            <div>
-                                <Navigation
-                                    onKeyUp={this.handleKeyUp}
-                                    searchText={this.state.searchText}
-                                    handleClick={this.handleClick}
-                                />
-                            </div>
-                        )}
-                    />
+                    <div>
+                        <Navigation
+                            onKeyUp={this.handleKeyUp}
+                            searchText={this.state.searchText}
+                            handleClick={this.handleClick}
+                            loggedIn={this.state.isLoggedIn}
+                            onLoggedOut={() => {
+                                this.handleLogout();
+                                location.replace("/");
+                            }}
+                        />
+                    </div>
+
                     <div className="welcome-wraper">
                         <h1>What is in your fridge?</h1>
                         <h2>
@@ -105,7 +108,17 @@ export default class Main extends React.Component {
                     {whatToRender}
 
                     <Route exact path="/registration" component={Register} />
-                    <Route exact path="/login" component={Login} />
+                    <Route
+                        exact
+                        path="/login"
+                        render={({ history }) => (
+                            <Login
+                                onLogin={() => {
+                                    this.handleLoginEvent(history);
+                                }}
+                            />
+                        )}
+                    />
                 </div>
             </BrowserRouter>
         );

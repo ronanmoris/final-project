@@ -48,7 +48,7 @@ app.post("/registration", (req, res) => {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
         res.json({
-            error: "Please use a valid email!"
+            error: "Please fill out all the input fields"
         });
         return;
     }
@@ -95,6 +95,11 @@ app.post("/login", (req, res) => {
             console.log(err);
             res.json({ success: false, error: "Invalid email" });
         });
+});
+
+app.post("/logout", (req, res) => {
+    req.session = null;
+    res.json({ success: true });
 });
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");

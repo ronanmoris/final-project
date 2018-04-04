@@ -6,16 +6,25 @@
 html,
 body,
 main {
+    background-image: url(./images/dark-wooden.jpg);
+    background-size: cover;
     width: 100%;
     height: 100%;
 }
 
 .main-wallpaper {
-    /*background-image: url(./images/dark-wooden.jpg);*/
+    /*background-image: url(./images/dark-wooden.jpg);
+    background-size: cover;*/
     width: 100%;
     height: 100%;
 }
+/*==============
+NAV
+==============*/
 
+.nav-link {
+    color: white;
+}
 nav.navbar.navbar-expand-md.navbar-light.bg-faded {
     height: 120px;
 }
@@ -23,7 +32,7 @@ nav.navbar.navbar-expand-md.navbar-light.bg-faded {
 #navbar-brand {
     margin-left: 3em;
     font-family: "Nunito", sans-serif;
-    color: gold;
+    color: #a47357;
 }
 
 .nav-item {
@@ -35,8 +44,8 @@ nav.navbar.navbar-expand-md.navbar-light.bg-faded {
 }
 
 #navbar-toggle {
+    color: white;
     font-family: "Nunito", sans-serif;
-    color: gold;
 }
 /*SEARCH CONTAINER*/
 
@@ -51,9 +60,9 @@ nav.navbar.navbar-expand-md.navbar-light.bg-faded {
 .search-box {
     margin-left: 1em;
     position: relative;
-    max-width: 500px;
-    max-height: 300px;
-    min-width: 400px;
+    max-width: 300px;
+    min-width: 250px;
+    width: 350px;
 }
 
 .search-box input {
@@ -68,7 +77,7 @@ nav.navbar.navbar-expand-md.navbar-light.bg-faded {
 
 svg.svg-inline--fa.fa-search.fa-w-16 {
     position: absolute;
-    left: 300px;
+    left: 210px;
     top: 11px;
 }
 /*====================
@@ -100,9 +109,13 @@ svg.svg-inline--fa.fa-search.fa-w-16 {
     color: white;
 }
 
+/*=========
+RECIPES
+=========*/
 .recipes-wraper {
-    width: 90%;
-    background-color: black;
+    width: 100%;
+    /*background-image: url(./images/dark-wooden.jpg);
+    background-size: cover;*/
     margin-left: auto;
     margin-right: auto;
 }
@@ -122,16 +135,30 @@ svg.svg-inline--fa.fa-search.fa-w-16 {
     height: 20%;
 }
 
-.recipe-description-box {
+.recipe-description-wraper {
+    width: 90%;
     margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+}
+
+.recipe-description-wraper h1 {
+    text-align: center;
+    padding: 2%;
+    color: gold;
+}
+
+.recipe-uploader-box {
+    width: 50%;
+    background-color: white;
+    margin: 2%;
+    padding: 2%;
+}
+
+.recipe-uploader-box h1 {
+    color: inherit;
 }
 
 .recipe-card {
-    width: 40%;
+    width: 30%;
 }
 
 .card-img-top {
@@ -158,17 +185,28 @@ HOME
 REGISTRATION FORM
 ===================*/
 .registration-form {
-    width: 80%;
+    padding: 1.5%;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    width: 90%;
     border-top: 2px solid black;
-    margin: 2%;
+}
+.label {
+    margin-left: 0.5rem;
 }
 /*=====================
 LOGIN
 =====================*/
 .login-form {
-    width: 80%;
+    padding: 1.5%;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    width: 90%;
     border-top: 2px solid black;
-    margin: 2%;
 }
 .error {
     color: red;

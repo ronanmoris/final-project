@@ -22,6 +22,7 @@ export default class Home extends React.Component {
         const recipes = this.props.recipes.map(item => {
             return (
                 <Recipe
+                    key={item.recipe_id}
                     handleLink={this.handleLink}
                     title={item.title}
                     image_url={item.image_url}

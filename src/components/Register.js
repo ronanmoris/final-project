@@ -18,18 +18,26 @@ export default class Register extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+        if (!this.state.username || !this.state.email || !this.state.password) {
+            return;
+        }
+        if (this.state.error) {
+            this.setState({
+                error: undefined
+            });
+        }
     }
     handleSubmit(e) {
-        console.log("this.state", this.state);
         axios.post("/registration", this.state).then(response => {
-            console.log("response from server", response);
-            if (!resp.data.success) {
+            if (!response.data.success) {
                 this.setState({
-                    error: resp.data.error
+                    error: response.data.error
                 });
                 return;
             }
-            //location.replace("/");
+            alert("Registration successful");
+            localStorage.setItem("userLogged", true);
+            // location.replace("/login");
         });
     }
     render() {
@@ -37,6 +45,9 @@ export default class Register extends React.Component {
             <div className="registration-form">
                 <h2>You can register for free</h2>
                 <h5>All fields are required for registration</h5>
+                {this.state.error && (
+                    <h4 className="error">{this.state.error}</h4>
+                )}
                 <Form>
                     <FormGroup>
                         <Label for="username">Username</Label>

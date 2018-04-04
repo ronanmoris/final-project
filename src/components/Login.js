@@ -20,14 +20,14 @@ export default class Login extends React.Component {
     }
     handleSubmit(e) {
         axios.post("/login", this.state).then(response => {
-            console.log("response in login ", response);
             if (!response.data.success) {
                 this.setState({
                     error: response.data.error
                 });
                 return;
             }
-            // location.replace("/");
+            localStorage.setItem("userLogged", true);
+            this.props.onLogin();
         });
     }
 
@@ -44,7 +44,6 @@ export default class Login extends React.Component {
                             onChange={this.handleChange}
                             type="email"
                             name="email"
-                            id="exampleEmail"
                             placeholder="email"
                         />
                     </FormGroup>
@@ -54,7 +53,6 @@ export default class Login extends React.Component {
                             onChange={this.handleChange}
                             type="password"
                             name="password"
-                            id="examplePassword"
                             placeholder="password"
                         />
                     </FormGroup>
