@@ -48,7 +48,7 @@ export default class Login extends React.Component {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="examplePassword">Password</Label>
+                        <Label for="password">Password</Label>
                         <Input
                             onChange={this.handleChange}
                             type="password"

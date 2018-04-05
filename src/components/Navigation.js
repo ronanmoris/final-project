@@ -9,11 +9,7 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
+    NavLink
 } from "reactstrap";
 
 export default class Navigation extends React.Component {
@@ -24,15 +20,9 @@ export default class Navigation extends React.Component {
             isOpen: false,
             typingTimeOut: 0
         };
-        this.toggle = this.toggle.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.isLoggedIn = this.isLoggedIn.bind(this);
         this.onLogout = this.onLogout.bind(this);
-    }
-    toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
     }
 
     handleKeyUp(e) {
@@ -65,24 +55,30 @@ export default class Navigation extends React.Component {
         if (!this.isLoggedIn()) {
             loginLink = (
                 <NavItem>
-                    <NavLink href="/login">Login</NavLink>
+                    <NavLink className="nav-links" href="/login">
+                        Login
+                    </NavLink>
                 </NavItem>
             );
             registerLink = (
                 <NavItem>
-                    <NavLink href="/registration">Register</NavLink>
+                    <NavLink className="nav-links" href="/registration">
+                        Register
+                    </NavLink>
                 </NavItem>
             );
         }
         if (this.isLoggedIn()) {
             logoutLink = (
-                <Link className="nav-link" to="/" onClick={this.onLogout}>
+                <Link className="nav-links" to="/" onClick={this.onLogout}>
                     Logout
                 </Link>
             );
             addRecipeLink = (
                 <NavItem>
-                    <NavLink href="/recipeUploader">Add Recipe</NavLink>
+                    <NavLink className="nav-links" href="/recipeUploader">
+                        Add Recipe
+                    </NavLink>
                 </NavItem>
             );
         }
@@ -109,20 +105,8 @@ export default class Navigation extends React.Component {
                     {registerLink}
                     {loginLink}
                     {logoutLink}
-                    <NavbarToggler onClick={this.toggle} />
                 </Navbar>
             </div>
         );
     }
 }
-//
-
-//WITH OR WITHOUT THIS LOGO?
-//<NavItem>
-//     <NavLink href="/">
-//         <img id="logo" src="./images/logo.png" alt="Logo" />
-//     </NavLink>
-// </NavItem>
-
-//link for footer
-//<a href="http://www.freepik.com">Designed by Valeria_Aksakova / Freepik</a>

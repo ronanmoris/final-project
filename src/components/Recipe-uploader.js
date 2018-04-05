@@ -7,7 +7,14 @@ import {
     Label,
     Input,
     FormText,
-    Col
+    Col,
+    Card,
+    CardImg,
+    CardBody,
+    CardTitle,
+    CardSubtitle,
+    CardText,
+    CardLink
 } from "reactstrap";
 
 export default class RecipeUploader extends React.Component {
@@ -23,7 +30,11 @@ export default class RecipeUploader extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    componentDidMount() {
+        axios.get("/user-recipes").then(response => {
+            this.setState({ recipesList: response.data.payload });
+        });
+    }
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -38,16 +49,37 @@ export default class RecipeUploader extends React.Component {
         formData.append("file", this.file);
 
         axios.post("/recipeUploader", formData).then(response => {
-            this.props.onUpload(response);
-
-            //I WANT TO RENDER RECIPES IN THE HOME COMPONENT AS
-            //RECENT ADDED RECIPES AS INSPIRATION =)
-            // this.props.setNewRecipes(response.data.recipes);
-            // this.setState({ username, title, text, file });
+            this.setState({
+                recipesList: [
+                    response.data.response[0],
+                    ...this.state.recipesList
+                ]
+            });
         });
     }
 
     render() {
+        if (!this.state.recipesList) {
+            return null;
+        }
+        let userRecipesList = this.state.recipesList.map(recipe => {
+            return (
+                <Card className="">
+                    <CardImg
+                        top
+                        width="100%"
+                        src={recipe.concat}
+                        alt="Card image cap"
+                    />
+
+                    <CardBody>
+                        <CardTitle>{recipe.title}</CardTitle>
+                        <CardSubtitle>{recipe.username}</CardSubtitle>
+                        <CardText>{recipe.textarea}</CardText>
+                    </CardBody>
+                </Card>
+            );
+        });
         return (
             <div className="recipe-uploader-box">
                 <h1>Send us your recipe!</h1>
@@ -99,6 +131,8 @@ export default class RecipeUploader extends React.Component {
                     </FormGroup>
                     <Button onClick={this.handleSubmit}>Submit</Button>
                 </Form>
+                <h2 id="uploaded-recipes-h2">Your uploaded recipes</h2>
+                <div className="user-list-box">{userRecipesList}</div>
             </div>
         );
     }

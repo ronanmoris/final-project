@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import {
     HashRouter,
     Route,
@@ -14,7 +15,19 @@ import Navigation from "./Navigation";
 import Register from "./Register";
 import Login from "./Login";
 import RecipeUploader from "./Recipe-Uploader";
-import { Row } from "reactstrap";
+import {
+    Card,
+    CardImg,
+    CardBody,
+    CardTitle,
+    CardSubtitle,
+    CardText,
+    CardLink,
+    Container,
+    Row,
+    Col,
+    CardGroup
+} from "reactstrap";
 import fetchIngredients from "../service/api/Food-service";
 
 export default class Main extends React.Component {
@@ -33,8 +46,17 @@ export default class Main extends React.Component {
         this.onNewRecipeId = this.onNewRecipeId.bind(this);
         this.handleLoginEvent = this.handleLoginEvent.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.onUpload = this.onUpload.bind(this);
     }
 
+    componentDidMount() {
+        axios.get("/all-recipes").then(response => {
+            this.setState({
+                allRecipes: response.data.payload,
+                recentFourRecipes: response.data.payload.slice(0, 4)
+            });
+        });
+    }
     getIngredients(value) {
         fetchIngredients(value).then(response => {
             this.setState({
@@ -75,15 +97,28 @@ export default class Main extends React.Component {
         this.setState({ isLoggedIn: false });
         localStorage.clear();
     }
-    handleUpload(recipesList) {
+    onUpload(recipesList) {
         this.setState({ userRecipes: recipesList });
     }
     render() {
-        let userRecipesHtml = this.state.userRecipes.map(item => {
+        if (!this.state.recentFourRecipes) {
+            return null;
+        }
+        let recentFourRecipes = this.state.recentFourRecipes.map(recipe => {
             return (
-                <div>
-                    <p>{item.title}</p>
-                </div>
+                <Card className="added-recipes-card">
+                    <CardImg
+                        top
+                        width="100%"
+                        src={recipe.concat}
+                        alt="Card image cap"
+                    />
+                    <CardBody>
+                        <CardTitle>{recipe.title}</CardTitle>
+                        <CardSubtitle>{recipe.username}</CardSubtitle>
+                        <CardText>{recipe.textarea}</CardText>
+                    </CardBody>
+                </Card>
             );
         });
         let whatToRender;
@@ -118,6 +153,20 @@ export default class Main extends React.Component {
                             ingredients you already have at home.
                         </h2>
                     </div>
+                    <div className="recipes-wraper">
+                        <Container>
+                            <h1>Looking for inspiration?</h1>
+                            <h3>Check out the most recent added recipes!</h3>
+                            <Row>
+                                <Col sm="12">
+                                    <div className="recipes-box">
+                                        {recentFourRecipes}
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
+
                     {whatToRender}
 
                     <Route exact path="/registration" component={Register} />
@@ -125,9 +174,7 @@ export default class Main extends React.Component {
                         exact
                         path="/recipeUploader"
                         render={() => (
-                            <RecipeUploader onUpload={this.handleUpload} />
-                            <UserRecipeView params={this.state.userRecipes} />
-                            {userRecipesHtml}
+                            <RecipeUploader onUpload={this.onUpload} />
                         )}
                     />
 

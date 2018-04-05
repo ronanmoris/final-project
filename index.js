@@ -134,10 +134,19 @@ app.post("/recipeUploader", uploader.single("file"), s3.upload, (req, res) => {
             req.body.text
         )
         .then(response => {
-            db.listUserRecipes(req.session.userId).then(payload => {
-                res.json({ payload });
-            });
+            res.json({ response });
         });
+});
+
+app.get("/user-recipes", (req, res) => {
+    db.listUserRecipes(req.session.userId).then(payload => {
+        res.json({ payload });
+    });
+});
+app.get("/all-recipes", (req, res) => {
+    db.listAllRecipes().then(payload => {
+        res.json({ payload });
+    });
 });
 
 app.get("*", function(req, res) {

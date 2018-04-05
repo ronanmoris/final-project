@@ -27,15 +27,19 @@ function checkUserCredentialsToLogIn(email) {
             return results.rows;
         });
 }
+
 function uploadRecipe(userId, image, username, title, text) {
     return db
         .query(
-            `INSERT into recipes (userId,image,username,title, textarea) VALUES ($1,$2,$3,$4,$5) RETURNING *`,
+            `INSERT into recipes (userId,image,username,title, textarea) VALUES ($1,$2,$3,$4,$5)
+            RETURNING userId, image as concat,username,title, textarea
+             `,
             [userId, image, username, title, text]
         )
         .then(results => {
+            console.log("results ", results);
             if (results.rows[0]) {
-                results.rows[0].image = config.s3Url + results.rows[0].image;
+                results.rows[0].concat = config.s3Url + results.rows[0].concat;
             }
             return results.rows;
         });
@@ -44,7 +48,7 @@ function uploadRecipe(userId, image, username, title, text) {
 function listAllRecipes() {
     return db
         .query(
-            `SELECT image,username,title, textarea
+            `SELECT concat('https://s3.amazonaws.com/ronansrecipes/', image),username,title, textarea
         FROM recipes
         order by id desc;
         `
@@ -55,13 +59,12 @@ function listAllRecipes() {
 }
 
 function listUserRecipes(userId) {
-    console.log("config.s3Url", config.s3Url);
     return db
         .query(
-            `SELECT concat('https://s3.amazonaws.com/ronansimageboard/', image),username,title, textarea
+            `SELECT concat('https://s3.amazonaws.com/ronansrecipes/', image), username, title, textarea
         FROM recipes
         WHERE userId = $1
-        order by id desc;
+        ORDER BY id DESC;
         `,
             [userId]
         )

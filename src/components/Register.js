@@ -37,7 +37,7 @@ export default class Register extends React.Component {
             }
             alert("Registration successful");
             localStorage.setItem("userLogged", true);
-            // location.replace("/login");
+            location.replace("/login");
         });
     }
     render() {
