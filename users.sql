@@ -13,8 +13,8 @@ DROP TABLE IF EXISTS recipes;
 CREATE TABLE recipes(
    id SERIAL PRIMARY KEY,
    userId INTEGER,
-   textarea TEXT NOT NULL,
+   image VARCHAR(255),
+   username VARCHAR(255),
    title VARCHAR(255),
-   image VARCHAR(255)
-
+   textarea TEXT NOT NULL
 );

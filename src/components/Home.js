@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import Recipe from "./Recipe";
 import { Card, Row, Container, Col } from "reactstrap";
+import RecipeUploader from "./Recipe-Uploader";
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -22,6 +22,7 @@ export default class Home extends React.Component {
         const recipes = this.props.recipes.map(item => {
             return (
                 <Recipe
+                    setNewRecipes={this.props.setNewRecipes}
                     key={item.recipe_id}
                     handleLink={this.handleLink}
                     title={item.title}

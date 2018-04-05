@@ -75,7 +75,17 @@ export default class Main extends React.Component {
         this.setState({ isLoggedIn: false });
         localStorage.clear();
     }
+    handleUpload(recipesList) {
+        this.setState({ userRecipes: recipesList });
+    }
     render() {
+        let userRecipesHtml = this.state.userRecipes.map(item => {
+            return (
+                <div>
+                    <p>{item.title}</p>
+                </div>
+            );
+        });
         let whatToRender;
         if (this.state.recipeId) {
             whatToRender = <RecipeDescription recipeId={this.state.recipeId} />;
@@ -114,8 +124,13 @@ export default class Main extends React.Component {
                     <Route
                         exact
                         path="/recipeUploader"
-                        component={RecipeUploader}
+                        render={() => (
+                            <RecipeUploader onUpload={this.handleUpload} />
+                            <UserRecipeView params={this.state.userRecipes} />
+                            {userRecipesHtml}
+                        )}
                     />
+
                     <Route
                         exact
                         path="/login"

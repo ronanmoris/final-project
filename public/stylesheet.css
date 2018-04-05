@@ -114,8 +114,6 @@ RECIPES
 =========*/
 .recipes-wraper {
     width: 100%;
-    /*background-image: url(./images/dark-wooden.jpg);
-    background-size: cover;*/
     margin-left: auto;
     margin-right: auto;
 }
@@ -148,7 +146,7 @@ RECIPES
 
 .recipe-uploader-box {
     width: 50%;
-    background-color: white;
+    background-color: lightsalmon;
     margin: 2%;
     padding: 2%;
 }
@@ -156,7 +154,9 @@ RECIPES
 .recipe-uploader-box h1 {
     color: inherit;
 }
-
+.card {
+    margin: 2%;
+}
 .recipe-card {
     width: 30%;
 }

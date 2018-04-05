@@ -15,7 +15,8 @@ export default class RecipeUploader extends React.Component {
         super(props);
 
         this.state = {
-            email: "",
+            username: "",
+            title: "",
             text: "",
             file: ""
         };
@@ -31,19 +32,19 @@ export default class RecipeUploader extends React.Component {
 
     handleSubmit(e) {
         let formData = new FormData();
-        formData.append("file", this.file);
-        formData.append("email", this.state.email);
+        formData.append("username", this.state.username);
+        formData.append("title", this.state.title);
         formData.append("text", this.state.text);
+        formData.append("file", this.file);
 
         axios.post("/recipeUploader", formData).then(response => {
-            console.log("response front", response.data.response);
+            this.props.onUpload(response);
+
+            //I WANT TO RENDER RECIPES IN THE HOME COMPONENT AS
+            //RECENT ADDED RECIPES AS INSPIRATION =)
+            // this.props.setNewRecipes(response.data.recipes);
+            // this.setState({ username, title, text, file });
         });
-        // axios.post("/upload", formData).then(response => {
-        //     this.props.setImage(response.data.imageUrl);
-        //     this.setState({
-        //         file: response.data.imageUrl
-        //     });
-        // });
     }
 
     render() {
@@ -52,12 +53,21 @@ export default class RecipeUploader extends React.Component {
                 <h1>Send us your recipe!</h1>
                 <Form>
                     <FormGroup>
-                        <Label for="email">Email</Label>
+                        <Label for="username">Username</Label>
                         <Input
                             onChange={this.handleChange}
-                            type="email"
-                            name="email"
-                            placeholder="email"
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="email">Recipe Title</Label>
+                        <Input
+                            onChange={this.handleChange}
+                            type="text"
+                            name="title"
+                            placeholder="Title"
                         />
                     </FormGroup>
                     <FormGroup>

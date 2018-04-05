@@ -126,9 +126,17 @@ app.post("/logout", (req, res) => {
 
 app.post("/recipeUploader", uploader.single("file"), s3.upload, (req, res) => {
     db
-        .uploadRecipe(req.session.userId, req.file.filename, req.body.text)
+        .uploadRecipe(
+            req.session.userId,
+            req.file.filename,
+            req.body.username,
+            req.body.title,
+            req.body.text
+        )
         .then(response => {
-            res.json({ response });
+            db.listUserRecipes(req.session.userId).then(payload => {
+                res.json({ payload });
+            });
         });
 });
 
