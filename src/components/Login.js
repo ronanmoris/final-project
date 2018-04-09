@@ -13,6 +13,11 @@ export default class Login extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    componentDidMount() {
+        var element = document.getElementById("login");
+        element.scrollIntoView();
+    }
+
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -34,7 +39,7 @@ export default class Login extends React.Component {
     render() {
         const { email, password, error } = this.state;
         return (
-            <div className="login-form">
+            <div id="login" className="login-form">
                 <h2>Already Registered? Login.</h2>
                 {error && <h4 className="error">{error}</h4>}
                 <Form>

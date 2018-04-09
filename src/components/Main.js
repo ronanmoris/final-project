@@ -1,12 +1,6 @@
 import React from "react";
 import axios from "axios";
-import {
-    HashRouter,
-    Route,
-    Link,
-    BrowserRouter,
-    withRouter
-} from "react-router-dom";
+import { HashRouter, Route, Link, BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom";
 import Home from "./Home";
 import Recipe from "./Recipe";
@@ -57,6 +51,7 @@ export default class Main extends React.Component {
             });
         });
     }
+
     getIngredients(value) {
         fetchIngredients(value).then(response => {
             this.setState({
@@ -77,7 +72,7 @@ export default class Main extends React.Component {
             searchText: e.target.value,
             typingTimeout: setTimeout(
                 this.getIngredients.bind(this, e.target.value),
-                2000
+                1500
             ),
             recipeId: null
         });

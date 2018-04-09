@@ -14,6 +14,11 @@ export default class Register extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentDidMount() {
+        var element = document.getElementById("registration");
+        element.scrollIntoView();
+    }
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -42,7 +47,7 @@ export default class Register extends React.Component {
     }
     render() {
         return (
-            <div className="registration-form">
+            <div id="registration" className="registration-form">
                 <h2>You can register for free</h2>
                 <h5>All fields are required for registration</h5>
                 {this.state.error && (

@@ -10,7 +10,10 @@ export default class Home extends React.Component {
 
         this.handleLink = this.handleLink.bind(this);
     }
-
+    componentDidUpdate() {
+        var element = document.getElementById("recipes-wrapper");
+        element.scrollIntoView();
+    }
     handleLink(id) {
         this.props.newRecipeId(id);
     }
@@ -32,7 +35,7 @@ export default class Home extends React.Component {
             );
         });
         return (
-            <div className="recipes-wraper">
+            <div id="recipes-wrapper" className="recipes-wraper">
                 <Container>
                     <Row>
                         <Col sm="12">
