@@ -138,6 +138,7 @@ RECIPES
 }
 
 .recipe-description-wraper h1 {
+    color: gold;
     text-align: center;
     padding: 2%;
 }

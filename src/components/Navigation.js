@@ -16,10 +16,6 @@ export default class Navigation extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            isOpen: false,
-            typingTimeOut: 0
-        };
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.isLoggedIn = this.isLoggedIn.bind(this);
         this.onLogout = this.onLogout.bind(this);
@@ -96,10 +92,7 @@ export default class Navigation extends React.Component {
                             type="text"
                             placeholder="type ingredients or recipe..."
                         />
-                        <span
-                            onClick={this.handleClick}
-                            className="fas fa-search"
-                        />
+                        <span className="fas fa-search" />
                     </div>
                     {addRecipeLink}
                     {registerLink}

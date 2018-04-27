@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { HashRouter, Route, Link, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom";
 import Home from "./Home";
 import Recipe from "./Recipe";
@@ -9,6 +9,7 @@ import Navigation from "./Navigation";
 import Register from "./Register";
 import Login from "./Login";
 import RecipeUploader from "./Recipe-Uploader";
+import fetchIngredients from "../service/api/Food-service";
 import {
     Card,
     CardImg,
@@ -22,7 +23,6 @@ import {
     Col,
     CardGroup
 } from "reactstrap";
-import fetchIngredients from "../service/api/Food-service";
 
 export default class Main extends React.Component {
     constructor(props) {
